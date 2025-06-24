@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "115344954306",
+    "project_id": "flutter-order-tracking",
+    "storage_bucket": "flutter-order-tracking.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:115344954306:android:280c3a3f129d711c8fbc5b",
+        "android_client_info": {
+          "package_name": "com.example.flutter_order_tracking"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7JP975a0V7ybZPaRNK-Ln-7ymOJj82xc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
