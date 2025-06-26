@@ -34,6 +34,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_local_notifications: ^19.3.0
+  flutter_timezone: ^4.1.1
+  timezone: ^0.10.1
 
 dev_dependencies:
   flutter_launcher_icons: ^0.14.4
