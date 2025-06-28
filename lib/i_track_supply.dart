@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'features/test_local_noti/views/test_view.dart';
+import 'features/test_push_noti/views/push_notification_view.dart';
 
 class ITrackSupply extends StatelessWidget {
   const ITrackSupply({super.key});
@@ -13,7 +13,7 @@ class ITrackSupply extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
       ),
       debugShowCheckedModeBanner: false,
-      home: TestView(),
+      home: const PushNotificationView(),
     );
   }
 }
