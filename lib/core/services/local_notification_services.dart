@@ -5,8 +5,12 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+import 'package:uuid/uuid.dart';
+
+final uuid = Uuid();
 
 abstract class LocalNotificationServices {
+  // 📌 Flutter local notification plugin
   static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
@@ -43,31 +47,44 @@ abstract class LocalNotificationServices {
   }
 
   // 🔔 Basic notification with custom sound
-  static Future<void> showBasicNotification() async {
+  static Future<void> showBasicNotification({
+    required String title,
+    required String body,
+    String? payload,
+  }) async {
+    // Optional custom sound (make sure you have the file in android/app/src/main/res/raw/)
     // final sound = RawResourceAndroidNotificationSound('notification_sound');
-    final androidDetails = AndroidNotificationDetails(
-      'basic_channel',
-      'Basic Notifications',
+
+    const androidDetails = AndroidNotificationDetails(
+      'basic_channel_id', // Channel ID
+      'Order Notifications', // Channel name
+      channelDescription:
+          'Notifications about order updates and important alerts',
       priority: Priority.high,
       importance: Importance.max,
       // sound: sound,
+      styleInformation: BigTextStyleInformation(
+        '',
+      ), // Automatically applies big style to long body
     );
 
-    var iosDetails = DarwinNotificationDetails(
+    const iosDetails = DarwinNotificationDetails(
       presentAlert: true,
       presentBadge: true,
       presentSound: true,
     );
-    final details = NotificationDetails(
+
+    const notificationDetails = NotificationDetails(
       android: androidDetails,
       iOS: iosDetails,
     );
+
     await flutterLocalNotificationsPlugin.show(
-      0,
-      'Order Status Update', //title
-      'Your order has been shipped!', //body
-      details,
-      payload: 'basic_notification_payload',
+      uuid.v4().hashCode.abs(),
+      title, // Notification title
+      body, // Notification body
+      notificationDetails,
+      payload: payload ?? 'default_payload',
     );
   }
 

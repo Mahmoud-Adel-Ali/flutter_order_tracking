@@ -44,7 +44,12 @@ class _TestViewBodyState extends State<TestViewBody> {
           const SizedBox(height: 40),
           MyButton(
             onPressed: () {
-              LocalNotificationServices.showBasicNotification();
+              LocalNotificationServices.showBasicNotification(
+                title: 'New Prescription Ready',
+                body:
+                    'Your medication is ready for pickup at your preferred pharmacy.',
+                payload: 'prescription_ready',
+              );
             },
             onCancel: () {
               cancelBasicNotification();
