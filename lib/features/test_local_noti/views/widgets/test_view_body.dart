@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/services/local_notification_services.dart';
-import '../../notefication_details_view.dart';
+import '../notefication_details_view.dart';
 import 'my_button.dart';
 
 class TestViewBody extends StatefulWidget {
