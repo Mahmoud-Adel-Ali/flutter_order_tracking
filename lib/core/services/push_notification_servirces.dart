@@ -9,6 +9,19 @@ abstract class PushNotificationServirces {
     log('[Push Notification] Initializing...');
     await messaging.requestPermission();
     String? token = await messaging.getToken();
-    log('Token: $token');log('[Push Notification] Initialized successfully.');
+    log('Token: $token');
+    FirebaseMessaging.onBackgroundMessage(backgroundMessageHandler);
+
+    log('[Push Notification] Initialized successfully.');
+  }
+
+  static Future<void> backgroundMessageHandler(RemoteMessage message) async {
+    //title, body
+    log(
+      '[Push Notification] Background message: ${message.notification?.title}',
+    );
+    log(
+      '[Push Notification] Background message: ${message.notification?.body}',
+    );
   }
 }
