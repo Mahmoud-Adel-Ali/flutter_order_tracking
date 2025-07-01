@@ -12,7 +12,7 @@ abstract class PushNotificationServirces {
     await messaging.requestPermission();
 
     // When we want to subscribe to a topic
-    messaging.subscribeToTopic('all').then((value) {
+    await messaging.subscribeToTopic('all').then((value) {
       log('[Push Notification] Subscribed to topic (all) successfully.');
     });
     // When we want to unsubscribe from a topic

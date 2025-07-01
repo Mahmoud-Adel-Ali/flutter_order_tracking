@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'features/test_push_noti/views/push_notification_view.dart';
+import 'features/order_tracking/presentation/views/order_tracking_view.dart';
 
 class ITrackSupply extends StatelessWidget {
   const ITrackSupply({super.key});
@@ -10,10 +10,10 @@ class ITrackSupply extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       debugShowCheckedModeBanner: false,
-      home: const PushNotificationView(),
+      home: const OrderTrackingView(),
     );
   }
 }
