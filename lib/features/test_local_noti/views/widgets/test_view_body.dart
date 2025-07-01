@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/services/local_notification_services.dart';
@@ -45,10 +46,13 @@ class _TestViewBodyState extends State<TestViewBody> {
           MyButton(
             onPressed: () {
               LocalNotificationServices.showBasicNotification(
-                title: 'New Prescription Ready',
-                body:
-                    'Your medication is ready for pickup at your preferred pharmacy.',
-                payload: 'prescription_ready',
+                const RemoteMessage(
+                  notification: RemoteNotification(
+                    title: 'New Prescription Ready',
+                    body:
+                        'Your medication is ready for pickup at your preferred pharmacy.',
+                  ),
+                ),
               );
             },
             onCancel: () {

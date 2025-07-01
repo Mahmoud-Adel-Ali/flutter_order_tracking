@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 
+import 'local_notification_services.dart';
+
 abstract class PushNotificationServirces {
   static FirebaseMessaging messaging = FirebaseMessaging.instance;
 
@@ -11,6 +13,8 @@ abstract class PushNotificationServirces {
     String? token = await messaging.getToken();
     log('Token: $token');
     FirebaseMessaging.onBackgroundMessage(backgroundMessageHandler);
+    //On Foreground Message
+    forgroundMessageHandler();
 
     log('[Push Notification] Initialized successfully.');
   }
@@ -23,5 +27,12 @@ abstract class PushNotificationServirces {
     log(
       '[Push Notification] Background message: ${message.notification?.body}',
     );
+  }
+
+  static void forgroundMessageHandler() {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      //local notification
+      LocalNotificationServices.showBasicNotification(message);
+    });
   }
 }

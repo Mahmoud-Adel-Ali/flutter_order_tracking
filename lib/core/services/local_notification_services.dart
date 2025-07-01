@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
@@ -47,11 +48,7 @@ abstract class LocalNotificationServices {
   }
 
   // 🔔 Basic notification with custom sound
-  static Future<void> showBasicNotification({
-    required String title,
-    required String body,
-    String? payload,
-  }) async {
+  static Future<void> showBasicNotification(RemoteMessage message) async {
     // Optional custom sound (make sure you have the file in android/app/src/main/res/raw/)
     // final sound = RawResourceAndroidNotificationSound('notification_sound');
 
@@ -81,10 +78,10 @@ abstract class LocalNotificationServices {
 
     await flutterLocalNotificationsPlugin.show(
       uuid.v4().hashCode.abs(),
-      title, // Notification title
-      body, // Notification body
+      message.notification?.title, // Notification title
+      message.notification?.body, // Notification body
       notificationDetails,
-      payload: payload ?? 'default_payload',
+      payload: message.data['route'] ?? 'default_payload',
     );
   }
 
