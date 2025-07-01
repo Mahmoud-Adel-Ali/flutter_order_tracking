@@ -63,7 +63,7 @@ class _TestViewBodyState extends State<TestViewBody> {
           const SizedBox(height: 40),
           MyButton(
             onPressed: () {
-              LocalNotificationServices.showRepeatedNotification();
+              // LocalNotificationServices.showRepeatedNotification();
             },
             onCancel: () {
               cancelRepeatedNotification();
@@ -96,15 +96,15 @@ class _TestViewBodyState extends State<TestViewBody> {
   }
 
   void cancelScheduledNotification() {
-    LocalNotificationServices.cancelNotification(2);
+    // LocalNotificationServices.cancelNotification(2);
   }
 
   void cancelRepeatedNotification() {
-    LocalNotificationServices.cancelNotification(1);
+    // LocalNotificationServices.cancelNotification(1);
   }
 
   void cancelBasicNotification() {
     //base notification
-    LocalNotificationServices.cancelNotification(0);
+    // LocalNotificationServices.cancelNotification(0);
   }
 }
