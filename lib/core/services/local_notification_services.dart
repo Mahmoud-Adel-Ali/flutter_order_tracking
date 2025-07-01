@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
 final uuid = Uuid();
@@ -44,14 +47,26 @@ abstract class LocalNotificationServices {
       uuid.v4().hashCode.abs(),
       message.notification?.title, // Notification title
       message.notification?.body, // Notification body
-      _notificationDetails(),
+      await _notificationDetails(
+        title: message.notification?.title ?? 'No title',
+        body: message.notification?.body ?? 'No body',
+        imageUrl: message.notification?.android?.imageUrl,
+      ),
       payload: message.data['route'] ?? 'default_payload',
     );
   }
 
-  static NotificationDetails _notificationDetails() {
+  static Future<NotificationDetails> _notificationDetails({
+    String? title,
+    String? body,
+    String? imageUrl,
+  }) async {
     return NotificationDetails(
-      android: _androidNotificationDetails(),
+      android: await _androidNotificationDetails(
+        title: title,
+        body: body,
+        imageUrl: imageUrl,
+      ),
       iOS: _iosDetails(),
     );
   }
@@ -64,11 +79,30 @@ abstract class LocalNotificationServices {
     );
   }
 
-  static AndroidNotificationDetails _androidNotificationDetails() {
+  static Future<AndroidNotificationDetails> _androidNotificationDetails({
+    String? title,
+    String? body,
+    String? imageUrl,
+  }) async {
+    final largeIconPath = await _downloadAndSaveImage(
+      imageUrl ?? '',
+      'largeIcon',
+    );
+    final bigPicturePath = await _downloadAndSaveImage(
+      imageUrl ?? '',
+      'bigPicture',
+    );
+    final styleInformation = BigPictureStyleInformation(
+      FilePathAndroidBitmap(bigPicturePath),
+      largeIcon: FilePathAndroidBitmap(largeIconPath),
+      contentTitle: title,
+      summaryText: body,
+    );
+
     // Optional custom sound (make sure you have the file in android/app/src/main/res/raw/)
     // final sound = RawResourceAndroidNotificationSound('notification_sound');
 
-    return const AndroidNotificationDetails(
+    return AndroidNotificationDetails(
       'basic_channel_id', // Channel ID
       'Order Notifications', // Channel name
       channelDescription:
@@ -76,10 +110,21 @@ abstract class LocalNotificationServices {
       priority: Priority.high,
       importance: Importance.max,
       // sound: sound,
-      styleInformation: BigTextStyleInformation(
-        '',
-      ), // Automatically applies big style to long body
+      styleInformation: styleInformation,
+      // Automatically applies big style to long body
     );
+  }
+
+  static Future<String> _downloadAndSaveImage(
+    String url,
+    String fileName,
+  ) async {
+    final directory = await getApplicationDocumentsDirectory();
+    final filePath = '${directory.path}/$fileName';
+    final response = await http.get(Uri.parse(url));
+    final file = File(filePath);
+    await file.writeAsBytes(response.bodyBytes);
+    return filePath;
   }
 }
 
