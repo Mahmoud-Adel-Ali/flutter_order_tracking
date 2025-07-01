@@ -25,25 +25,50 @@ abstract class LocalNotificationServices {
 
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
-      onDidReceiveNotificationResponse: onTap,
-      onDidReceiveBackgroundNotificationResponse: onTap,
+      onDidReceiveNotificationResponse: _onTap,
+      onDidReceiveBackgroundNotificationResponse: _onTap,
     );
 
     log('[Notification] Initialized successfully.');
   }
 
   // 🖱️ Tap handler
-  static void onTap(NotificationResponse response) {
+  static void _onTap(NotificationResponse response) {
     log('[Notification] Tapped: ${response.payload}');
     streamController.add(response);
   }
 
   // 🔔 Basic notification with custom sound
   static Future<void> showBasicNotification(RemoteMessage message) async {
+    await flutterLocalNotificationsPlugin.show(
+      uuid.v4().hashCode.abs(),
+      message.notification?.title, // Notification title
+      message.notification?.body, // Notification body
+      _notificationDetails(),
+      payload: message.data['route'] ?? 'default_payload',
+    );
+  }
+
+  static NotificationDetails _notificationDetails() {
+    return NotificationDetails(
+      android: _androidNotificationDetails(),
+      iOS: _iosDetails(),
+    );
+  }
+
+  static _iosDetails() {
+    return DarwinNotificationDetails(
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: true,
+    );
+  }
+
+  static AndroidNotificationDetails _androidNotificationDetails() {
     // Optional custom sound (make sure you have the file in android/app/src/main/res/raw/)
     // final sound = RawResourceAndroidNotificationSound('notification_sound');
 
-    const androidDetails = AndroidNotificationDetails(
+    return const AndroidNotificationDetails(
       'basic_channel_id', // Channel ID
       'Order Notifications', // Channel name
       channelDescription:
@@ -55,29 +80,8 @@ abstract class LocalNotificationServices {
         '',
       ), // Automatically applies big style to long body
     );
-
-    const iosDetails = DarwinNotificationDetails(
-      presentAlert: true,
-      presentBadge: true,
-      presentSound: true,
-    );
-
-    const notificationDetails = NotificationDetails(
-      android: androidDetails,
-      iOS: iosDetails,
-    );
-
-    await flutterLocalNotificationsPlugin.show(
-      uuid.v4().hashCode.abs(),
-      message.notification?.title, // Notification title
-      message.notification?.body, // Notification body
-      notificationDetails,
-      payload: message.data['route'] ?? 'default_payload',
-    );
   }
 }
-
-
 
 ///////////////////////////////////////////////
 
