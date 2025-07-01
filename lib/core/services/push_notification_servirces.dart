@@ -10,8 +10,12 @@ abstract class PushNotificationServirces {
   static Future<void> init() async {
     log('[Push Notification] Initializing...');
     await messaging.requestPermission();
-    String? token = await messaging.getToken();
-    log('Token: $token');
+    await messaging.getToken().then((value) {
+      sendTokenToServer(value);
+    });
+    messaging.onTokenRefresh.listen((value) {
+      sendTokenToServer(value);
+    });
     FirebaseMessaging.onBackgroundMessage(backgroundMessageHandler);
     //On Foreground Message
     forgroundMessageHandler();
@@ -34,5 +38,11 @@ abstract class PushNotificationServirces {
       //local notification
       LocalNotificationServices.showBasicNotification(message);
     });
+  }
+
+  static void sendTokenToServer(String? token) {
+    log('[Push Notification] Token: $token');
+    // Option one : send token to API
+    // Option two : send token to Firebase
   }
 }
