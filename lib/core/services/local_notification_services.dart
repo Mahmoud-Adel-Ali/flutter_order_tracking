@@ -76,6 +76,7 @@ abstract class LocalNotificationServices {
       presentAlert: true,
       presentBadge: true,
       presentSound: true,
+      sound: 'notification_sound.wav',
     );
   }
 
@@ -100,18 +101,20 @@ abstract class LocalNotificationServices {
     );
 
     // Optional custom sound (make sure you have the file in android/app/src/main/res/raw/)
-    // final sound = RawResourceAndroidNotificationSound('notification_sound');
+    final sound = RawResourceAndroidNotificationSound(
+      'notification_sound'.split('.').first,
+    );
 
     return AndroidNotificationDetails(
-      'basic_channel_id', // Channel ID
-      'Order Notifications', // Channel name
+      'channel_id',
+      'channel_name',
       channelDescription:
           'Notifications about order updates and important alerts',
       priority: Priority.high,
       importance: Importance.max,
-      // sound: sound,
+      sound: sound,
+      playSound: true,
       styleInformation: styleInformation,
-      // Automatically applies big style to long body
     );
   }
 
