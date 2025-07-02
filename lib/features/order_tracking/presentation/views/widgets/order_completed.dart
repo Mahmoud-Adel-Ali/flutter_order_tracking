@@ -11,7 +11,7 @@ class OrderCompleted extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.check_circle_outline, color: Colors.green, size: 80),
+            Icon(Icons.check_circle_outline, color: Colors.green, size: 100),
             const SizedBox(height: 16),
             const Text(
               "Order Completed",
@@ -37,9 +37,9 @@ class OrderCompleted extends StatelessWidget {
                 ),
               ),
               icon: const Icon(
-                Icons.receipt_long,
+                Icons.receipt_long_outlined,
                 color: Colors.white,
-                size: 24,
+                size: 32,
               ),
               label: const Text(
                 "View Invoice",

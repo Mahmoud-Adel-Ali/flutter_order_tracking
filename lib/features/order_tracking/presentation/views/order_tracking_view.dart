@@ -14,9 +14,9 @@ class OrderTrackingView extends StatelessWidget {
       create: (context) => OrderStatusCubit(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Order Tracker"),
+          title: Text("Order Tracker", style: TextStyle(color: Colors.white)),
           centerTitle: true,
-          backgroundColor: Color(0xFF1976D2),
+          backgroundColor: Color(0xFF009688),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
