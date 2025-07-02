@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'features/order_tracking/presentation/views/order_tracking_view.dart';
+import 'core/services/utils/app_routes.dart';
 
 class ITrackSupply extends StatelessWidget {
   const ITrackSupply({super.key});
@@ -13,7 +13,8 @@ class ITrackSupply extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       debugShowCheckedModeBanner: false,
-      home: const OrderTrackingView(),
+      initialRoute: AppRoutes.splashView,
+      onGenerateRoute: AppRoutes.onGenerateRoute,
     );
   }
 }
