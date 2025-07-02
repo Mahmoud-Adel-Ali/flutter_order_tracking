@@ -20,24 +20,36 @@ class OrderStatusCubit extends Cubit<OrderStatusState> {
   void completePending() {
     currentIndex = 1;
     _showNotificaiton(
-      title: "Order Pending",
-      body: "Your order has been Pending and is being processed",
+      title: "Order Received",
+      body: "Your order has been received and is awaiting confirmation.",
     );
     emit(OrderStatusCompleted());
   }
 
   void completeConfirmed() {
     currentIndex = 2;
+    _showNotificaiton(
+      title: "Order Confirmed",
+      body: "Your order has been confirmed and is being prepared for shipment.",
+    );
     emit(OrderStatusCompleted());
   }
 
   void completeShipped() {
     currentIndex = 3;
+    _showNotificaiton(
+      title: "Order Shipped",
+      body: "Your order is on its way. Track its progress in the app.",
+    );
     emit(OrderStatusCompleted());
   }
 
   void completeDelivered() {
     currentIndex = 4;
+    _showNotificaiton(
+      title: "Order Delivered",
+      body: "Your order has been successfully delivered. Thank you for choosing us!",
+    );
     emit(OrderStatusCompleted());
   }
 
