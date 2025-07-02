@@ -85,21 +85,20 @@ abstract class LocalNotificationServices {
     String? body,
     String? imageUrl,
   }) async {
-    final largeIconPath = await _downloadAndSaveImage(
-      imageUrl ?? '',
-      'largeIcon',
-    );
-    final bigPicturePath = await _downloadAndSaveImage(
-      imageUrl ?? '',
-      'bigPicture',
-    );
-    final styleInformation = BigPictureStyleInformation(
-      FilePathAndroidBitmap(bigPicturePath),
-      largeIcon: FilePathAndroidBitmap(largeIconPath),
-      contentTitle: title,
-      summaryText: body,
-    );
-
+    BigPictureStyleInformation? styleInformation;
+    if (imageUrl != null) {
+      final largeIconPath = await _downloadAndSaveImage(imageUrl, 'largeIcon');
+      final bigPicturePath = await _downloadAndSaveImage(
+        imageUrl,
+        'bigPicture',
+      );
+      styleInformation = BigPictureStyleInformation(
+        FilePathAndroidBitmap(bigPicturePath),
+        largeIcon: FilePathAndroidBitmap(largeIconPath),
+        contentTitle: title,
+        summaryText: body,
+      );
+    }
     // Optional custom sound (make sure you have the file in android/app/src/main/res/raw/)
     final sound = RawResourceAndroidNotificationSound(
       'notification_sound'.split('.').first,
@@ -114,7 +113,7 @@ abstract class LocalNotificationServices {
       importance: Importance.max,
       sound: sound,
       playSound: true,
-      styleInformation: styleInformation,
+      styleInformation: imageUrl == null ? null : styleInformation,
     );
   }
 
