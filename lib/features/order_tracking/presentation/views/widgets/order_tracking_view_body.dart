@@ -10,7 +10,7 @@ class OrderTrackingViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 24,
+      spacing: 40,
       children: [
         Text("Order Status", style: Theme.of(context).textTheme.titleLarge),
         OrderStatusProgressBar(),
