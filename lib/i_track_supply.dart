@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'core/services/utils/app_routes.dart';
+import 'core/utils/app_routes.dart';
 
 class ITrackSupply extends StatelessWidget {
   const ITrackSupply({super.key});

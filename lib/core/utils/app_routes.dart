@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../features/order_tracking/presentation/views/order_tracking_view.dart';
-import '../../../features/splash/presentation/view/splash_view.dart';
+import '../../features/order_tracking/presentation/views/order_tracking_view.dart';
+import '../../features/splash/presentation/view/splash_view.dart';
 
 class AppRoutes {
   static const String splashView = 'splashView';
